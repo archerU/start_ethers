@@ -3,9 +3,12 @@
 // const contract = new ethers.Contract(`address`, `abi`, `provider`);
 
 import { ethers } from "ethers";
+import { NETWORKS } from '../privateKeys.js';
 
+const MAINNET_URL = NETWORKS.mainnet.rpcUrl;
+const SEPOLIA_URL = NETWORKS.sepolia.rpcUrl;
 // 利用公共RPC节点连接以太坊网络
-const provider = new ethers.JsonRpcProvider('https://eth.llamarpc.com');
+const provider = new ethers.JsonRpcProvider(MAINNET_URL);
 
 // 第1种输入abi的方式: 复制abi全文
 // WETH的abi可以在这里复制：https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2#code
