@@ -25,17 +25,22 @@
         
         .left-sidebar {
             width: 350px;
+            min-width: 350px;
+            max-width: 350px;
             background: #ffffff;
             border-right: 2px solid #e1e5e9;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
         
         .right-main {
             flex: 1;
+            min-width: 0;
             background: #ffffff;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         
         .sidebar-header {
@@ -152,6 +157,7 @@
             padding: 30px;
             overflow-y: auto;
             background: #f8f9fa;
+            min-width: 0;
         }
         
         .output-content {
@@ -164,6 +170,8 @@
             font-size: 0.9em;
             line-height: 1.6;
             white-space: pre-wrap;
+            overflow-wrap: break-word;
+            word-break: break-all;
             overflow-y: auto;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
