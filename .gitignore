@@ -32,3 +32,6 @@ public/uploads
 *.ear
 *.db
 *.sqlite
+
+# 私钥配置文件（包含敏感信息）
+privateKeys.js
