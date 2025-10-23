@@ -1,7 +1,6 @@
 // 导入ethers包
 import { ethers } from "ethers";
-
-
+import { NETWORKS } from '../privateKeys.js';
 
 // import { PRIVATE_KEYS, NETWORKS, CONTRACTS, GAS_CONFIG } from '@config/config.js';
 // playcode免费版不能安装ethers，用这条命令，需要从网络上import包（把上面这行注释掉）
@@ -11,7 +10,7 @@ import { ethers } from "ethers";
 // const provider = new ethers.getDefaultProvider();
 // 使用公共RPC端点
 // const provider = new ethers.JsonRpcProvider('https://eth.llamarpc.com');
-const provider = new ethers.JsonRpcProvider('https://mainnet.infura.io/v3/9ab5e4638c3e4dee938dfd785b938218');
+const provider = new ethers.JsonRpcProvider(NETWORKS.sepolia.rpcUrl);
 
 const main = async () => {
     // 查询vitalik的ETH余额
