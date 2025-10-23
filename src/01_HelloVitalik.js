@@ -1,6 +1,6 @@
 // 导入ethers包
 import { ethers } from "ethers";
-import { NETWORKS } from '../privateKeys.js';
+import { NETWORKS, WALLET_ADDRESSES } from '../privateKeys.js';
 
 // import { PRIVATE_KEYS, NETWORKS, CONTRACTS, GAS_CONFIG } from '@config/config.js';
 // playcode免费版不能安装ethers，用这条命令，需要从网络上import包（把上面这行注释掉）
@@ -13,11 +13,15 @@ import { NETWORKS } from '../privateKeys.js';
 const provider = new ethers.JsonRpcProvider(NETWORKS.sepolia.rpcUrl);
 
 const main = async () => {
-    // 查询vitalik的ETH余额
+    // 查询vitalik（以太坊创始人）的ETH余额
     const balance = await provider.getBalance(`vitalik.eth`);
     // 将余额输出在console
     console.log(`ETH Balance of vitalik: ${ethers.formatEther(balance)} ETH`);
 
+    // 查询vitalik（以太坊创始人）的ETH余额
+    const balance1 = await provider.getBalance(WALLET_ADDRESSES.dev);
+    // 将余额输出在console
+    console.log(`ETH Balance of TEST: ${ethers.formatEther(balance1)} ETH`);
 }
 
 export default main;
