@@ -24,9 +24,9 @@
         }
         
         .left-sidebar {
-            width: 350px;
-            min-width: 350px;
-            max-width: 350px;
+            width: 300px;
+            min-width: 300px;
+            max-width: 300px;
             background: #ffffff;
             border-right: 2px solid #e1e5e9;
             display: flex;
@@ -34,12 +34,24 @@
             flex-shrink: 0;
         }
         
-        .right-main {
+        .middle-main {
             flex: 1;
             min-width: 0;
             background: #ffffff;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            border-right: 2px solid #e1e5e9;
+        }
+        
+        .right-readme {
+            width: 400px;
+            min-width: 400px;
+            max-width: 400px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
             overflow: hidden;
         }
         
@@ -235,6 +247,95 @@
             50% { opacity: 0.5; }
             100% { opacity: 1; }
         }
+        /* Readme样式 */
+        .readme-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .readme-title {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .readme-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        
+        .readme-content {
+            background: #ffffff;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.9em;
+            line-height: 1.6;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            max-height: calc(100vh - 200px);
+        }
+        
+        .readme-content h1 {
+            color: #495057;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 8px;
+        }
+        
+        .readme-content h2 {
+            color: #495057;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        
+        .readme-content h3 {
+            color: #6c757d;
+            font-size: 1.1em;
+            margin: 15px 0 8px 0;
+        }
+        
+        .readme-content p {
+            margin: 8px 0;
+            color: #495057;
+        }
+        
+        .readme-content ul, .readme-content ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .readme-content li {
+            margin: 5px 0;
+            color: #495057;
+        }
+        
+        .readme-content code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        .readme-content pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .readme-content pre code {
+            background: none;
+            padding: 0;
+            color: #495057;
+        }
     </style>
 </head>
 <body>
@@ -262,8 +363,8 @@
             </div>
         </div>
         
-        <!-- 右侧运行结果区域 -->
-        <div class="right-main">
+        <!-- 中间运行结果区域 -->
+        <div class="middle-main">
             <div class="main-header">
                 <div class="main-title">📊 运行结果</div>
             </div>
@@ -271,6 +372,19 @@
             <div class="output-container">
                 <div class="output-content" id="output">
                     <div class="loading">请从左侧选择一个示例文件开始运行...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧说明文档区域 -->
+        <div class="right-readme">
+            <div class="readme-header">
+                <div class="readme-title">📖 文件说明</div>
+            </div>
+            
+            <div class="readme-container">
+                <div class="readme-content" id="readme">
+                    <div class="loading">请选择一个文件查看说明...</div>
                 </div>
             </div>
         </div>

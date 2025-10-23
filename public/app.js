@@ -5,6 +5,7 @@ class EthersApp {
         this.fileItems = document.querySelectorAll('.file-item');
         this.runButton = document.getElementById('runButton');
         this.output = document.getElementById('output');
+        this.readme = document.getElementById('readme');
         
         this.init();
     }
@@ -38,6 +39,9 @@ class EthersApp {
                 
                 // 清空输出区域
                 this.output.innerHTML = '';
+                
+                // 加载对应的readme文件
+                this.loadReadme(this.selectedFile);
             });
         });
     }
@@ -197,6 +201,39 @@ class EthersApp {
             };
             document.head.appendChild(script);
         });
+    }
+    
+    // 加载readme文件
+    async loadReadme(filename) {
+        try {
+            const response = await fetch(`/docs/${filename}.md`);
+            if (response.ok) {
+                const markdown = await response.text();
+                this.readme.innerHTML = this.parseMarkdown(markdown);
+            } else {
+                this.readme.innerHTML = '<div class="loading">暂无说明文档</div>';
+            }
+        } catch (error) {
+            this.readme.innerHTML = '<div class="loading">加载说明文档失败</div>';
+        }
+    }
+    
+    // 简单的Markdown解析器
+    parseMarkdown(markdown) {
+        return markdown
+            .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+            .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+            .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+            .replace(/^\- (.*$)/gim, '<li>$1</li>')
+            .replace(/^\* (.*$)/gim, '<li>$1</li>')
+            .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+            .replace(/\*(.*)\*/gim, '<em>$1</em>')
+            .replace(/`(.*)`/gim, '<code>$1</code>')
+            .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
+            .replace(/\n/gim, '<br>')
+            .replace(/<li>(.*?)<br>/gim, '<li>$1</li>')
+            .replace(/(<li>.*<\/li>)/gim, '<ul>$1</ul>')
+            .replace(/<\/ul><ul>/gim, '');
     }
 }
 

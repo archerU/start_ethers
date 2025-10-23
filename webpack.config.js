@@ -34,6 +34,14 @@ module.exports = {
       {
         directory: path.join(__dirname, "dist"),
         publicPath: "/",
+      },
+      {
+        directory: path.join(__dirname, "src"),
+        publicPath: "/src",
+      },
+      {
+        directory: path.join(__dirname, "docs"),
+        publicPath: "/docs",
       }
     ],
     compress: true,
