@@ -1,10 +1,7 @@
 // 文件加载器 - 负责动态加载src目录中的文件列表
 class FileLoader {
     constructor() {
-        this.fileDescriptions = {
-            '01_HelloVitalik.js': '查询 Vitalik 地址余额和网络信息',
-            '02_Provider.js': 'Provider 功能全面示例（网络、区块、余额、Gas）'
-        };
+        // 不再需要文件描述配置
     }
 
     // 动态加载文件列表
@@ -29,8 +26,13 @@ class FileLoader {
     // 获取默认文件列表
     getDefaultFileList() {
         return [
-            { name: '01_HelloVitalik.js', desc: this.fileDescriptions['01_HelloVitalik.js'] },
-            { name: '02_Provider.js', desc: this.fileDescriptions['02_Provider.js'] }
+            { name: '00_config.js' },
+            { name: '01_HelloVitalik.js' },
+            { name: '02_Provider.js' },
+            { name: '03_ReadContract.js' },
+            { name: '04_SendETH.js' },
+            { name: '05_WriteContract.js' },
+            { name: 'ET_metaMask.js' }
         ];
     }
 
@@ -51,7 +53,6 @@ class FileLoader {
             
             fileItem.innerHTML = `
                 <div class="file-name">${file.name}</div>
-                <div class="file-desc">${file.desc}</div>
             `;
             
             fileListContainer.appendChild(fileItem);

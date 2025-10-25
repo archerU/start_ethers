@@ -5,24 +5,25 @@
 import { ethers } from "ethers";
 // playcode免费版不能安装ethers，用这条命令，需要从网络上import包（把上面这行注释掉）
 // import { ethers } from "https://cdn-cors.ethers.io/lib/ethers-5.6.9.esm.min.js";
-import { NETWORKS } from '../privateKeys.js';
+import { NETWORKS, WALLETS, CONTRACTS } from '../privateKeys.js';
 const SEPOLIA_URL = NETWORKS.sepolia.rpcUrl;
 // 利用公共RPC节点连接以太坊网络
 const provider = new ethers.JsonRpcProvider(SEPOLIA_URL);
 
 // 利用私钥和provider创建wallet对象
-const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b'
-const wallet = new ethers.Wallet(privateKey, provider)
+// const privateKey = '0x227dbb8586117d55284e26620bc76534dfbd2394be34cf4a09cb775d593b6f2b'
+// const wallet = new ethers.Wallet(privateKey, provider)
+const wallet = new ethers.Wallet(WALLETS.main.privateKey, provider);
 
 // WETH的ABI
 const abiWETH = [
-    "function balanceOf(address) public view returns(uint)",
+    "function balanceOf(address) public view returns(uint)", 
     "function deposit() public payable",
     "function transfer(address, uint) public returns (bool)",
     "function withdraw(uint) public",
 ];
-// WETH合约地址（Goerli测试网）
-const addressWETH = '0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6'
+// WETH合约地址（sepolia 测试网）
+const addressWETH = CONTRACTS.erc20.sepolia;
 // WETH Contract
 
 // 声明可写合约
@@ -56,9 +57,9 @@ const main = async () => {
         console.log(`存款后WETH持仓: ${ethers.formatEther(balanceWETH_deposit)}\n`)
 
         // 3. 调用transfer()函数，将0.001 WETH转账给 vitalik
-        console.log("\n3. 调用transfer()函数，给vitalik转账0.001 WETH")
+        console.log("\n3. 调用transfer()函数，给钱包转账0.001 WETH")
         // 发起交易
-        const tx2 = await contractWETH.transfer("vitalik.eth", ethers.parseEther("0.001"))
+        const tx2 = await contractWETH.transfer(WALLETS.dev.address, ethers.parseEther("0.001"))
         // 等待交易上链
         await tx2.wait()
         const balanceWETH_transfer = await contractWETH.balanceOf(address)

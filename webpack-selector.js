@@ -280,11 +280,7 @@ function generateSelectorPage() {
 
 // 获取文件描述
 function getFileDescription(filename) {
-    const descriptions = {
-        '01_HelloVitalik.js': '查询 Vitalik 地址余额和网络信息',
-        '02_Provider.js': 'Provider 功能全面示例（网络、区块、余额、Gas）'
-    };
-    return descriptions[filename] || 'Ethers.js 示例文件';
+    return filename; // 直接返回文件名，不添加描述
 }
 
 module.exports = {

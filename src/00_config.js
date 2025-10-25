@@ -10,8 +10,8 @@ const main = async () => {
     // https://docs.ethers.io/v6/api/utils/wallet/
     // 打印
     console.log('钱包开发私钥：', md5(WALLETS.dev.privateKey))
-    console.log('ETH测试网络：', NETWORKS.sepolia)
-    console.log('ETH测试合约：', CONTRACTS.erc20)
+    console.log('ETH网络：', NETWORKS)
+    console.log('ETH合约：', CONTRACTS)
 }
 
 export default main;

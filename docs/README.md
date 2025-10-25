@@ -10,6 +10,7 @@
 - `03_ReadContract.md` - 智能合约读取示例
 - `04_SendETH.md` - 发送ETH示例
 - `05_WriteContract.md` - 智能合约写入示例
+- `ET_metaMask.md` - MetaMask钱包连接和操作示例
 
 ## 文档说明
 

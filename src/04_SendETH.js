@@ -20,7 +20,7 @@ const provider = new ethers.JsonRpcProvider(SEPOLIA_URL);
 // 从助记词创建wallet对象
 // const wallet3 = ethers.Wallet.fromPhrase(mnemonic.phrase)
 
-// 创建随机的wallet对象
+// 创建wallet对象
 const wallet1 = new ethers.Wallet(WALLETS.dev.privateKey, provider);
 const wallet2 = new ethers.Wallet(WALLETS.test.privateKey, provider);
 const wallet3 = new ethers.Wallet(WALLETS.main.privateKey, provider);
