@@ -12,6 +12,7 @@ class EthersApp {
     
     init() {
         this.initFileLoader();
+        this.setupResizer();
     }
     
     // 初始化文件加载器
@@ -216,6 +217,53 @@ class EthersApp {
         } catch (error) {
             this.readme.innerHTML = '<div class="loading">加载说明文档失败</div>';
         }
+    }
+    
+    // 设置拖动分隔条
+    setupResizer() {
+        const resizer = document.getElementById('resizer');
+        const middleMain = document.querySelector('.middle-main');
+        const rightReadme = document.querySelector('.right-readme');
+        
+        if (!resizer || !middleMain || !rightReadme) return;
+        
+        let isResizing = false;
+        let startX = 0;
+        let startWidth = 0;
+        
+        resizer.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startWidth = rightReadme.offsetWidth;
+            resizer.classList.add('dragging');
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            
+            const diff = startX - e.clientX; // 鼠标向左移动，diff为正
+            const newWidth = startWidth + diff;
+            
+            // 限制宽度范围
+            const minWidth = 200;
+            const maxWidth = window.innerWidth * 0.5; // 最大不超过窗口的50%
+            
+            if (newWidth >= minWidth && newWidth <= maxWidth) {
+                rightReadme.style.width = newWidth + 'px';
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                resizer.classList.remove('dragging');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
     }
     
     // 简单的Markdown解析器

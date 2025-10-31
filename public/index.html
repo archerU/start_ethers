@@ -36,18 +36,36 @@
         
         .middle-main {
             flex: 1;
-            min-width: 0;
+            min-width: 300px;
             background: #ffffff;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border-right: 2px solid #e1e5e9;
+            position: relative;
+        }
+        
+        .resizer {
+            width: 4px;
+            background: #e1e5e9;
+            cursor: col-resize;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 10;
+            transition: background 0.2s;
+        }
+        
+        .resizer:hover {
+            background: #667eea;
+        }
+        
+        .resizer.dragging {
+            background: #667eea;
         }
         
         .right-readme {
             width: 400px;
-            min-width: 400px;
-            max-width: 400px;
+            min-width: 200px;
+            max-width: 50%;
             background: #ffffff;
             display: flex;
             flex-direction: column;
@@ -417,6 +435,9 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 可拖动分隔条 -->
+        <div class="resizer" id="resizer"></div>
         
         <!-- 右侧说明文档区域 -->
         <div class="right-readme">
