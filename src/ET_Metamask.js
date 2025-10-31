@@ -283,16 +283,127 @@ async function signMessage(message) {
 
 
 
+// 创建MetaMask启动按钮
+function createMetaMaskButton() {
+    // 检查是否已存在按钮
+    if (document.getElementById('metaMaskButton')) {
+        return;
+    }
+
+    // 创建按钮容器
+    const buttonContainer = document.createElement('div');
+    buttonContainer.id = 'metaMaskButtonContainer';
+    buttonContainer.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: white;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    `;
+
+    // 创建按钮
+    const button = document.createElement('button');
+    button.id = 'metaMaskButton';
+    button.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 20px;">🦊</span>
+            <span>启动钱包</span>
+        </div>
+    `;
+    button.style.cssText = `
+        background: linear-gradient(135deg, #f6851b 0%, #ff6b35 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 150px;
+    `;
+
+    // 添加悬停效果
+    button.addEventListener('mouseenter', () => {
+        button.style.transform = 'translateY(-2px)';
+        button.style.boxShadow = '0 6px 20px rgba(246, 133, 27, 0.3)';
+    });
+
+    button.addEventListener('mouseleave', () => {
+        button.style.transform = 'translateY(0)';
+        button.style.boxShadow = 'none';
+    });
+
+    // 添加点击事件
+    button.addEventListener('click', async () => {
+        button.disabled = true;
+        button.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">⏳</span>
+                <span>启动中...</span>
+            </div>
+        `;
+        button.style.opacity = '0.7';
+
+        try {
+            await connectMetaMask();
+            // 连接成功后更新按钮
+            button.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 20px;">✅</span>
+                    <span>已启动</span>
+                </div>
+            `;
+            button.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+            button.disabled = false;
+            button.style.opacity = '1';
+        } catch (error) {
+            console.error('启动钱包失败:', error);
+            button.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 20px;">🦊</span>
+                    <span>启动钱包</span>
+                </div>
+            `;
+            button.disabled = false;
+            button.style.opacity = '1';
+        }
+    });
+
+    // 创建状态指示器
+    const statusIndicator = document.createElement('div');
+    statusIndicator.id = 'metaMaskStatus';
+    statusIndicator.style.cssText = `
+        margin-top: 8px;
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+    `;
+    statusIndicator.textContent = '点击启动MetaMask钱包';
+
+    // 组装按钮
+    buttonContainer.appendChild(button);
+    buttonContainer.appendChild(statusIndicator);
+    document.body.appendChild(buttonContainer);
+}
+
 // 主函数
 async function metaMaskExample() {
     console.log('🚀 开始MetaMask示例');
+    
+    // 创建MetaMask启动按钮
+    createMetaMaskButton();
     
     // 检查连接状态
     const isConnected = await checkConnection();
     
     if (!isConnected) {
-        // 如果未连接，尝试连接
-        await connectMetaMask();
+        console.log('💡 请点击右上角的按钮启动MetaMask钱包');
     } else {
         // 如果已连接，获取钱包信息
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -311,7 +422,8 @@ window.checkConnection = checkConnection;
 window.switchNetwork = switchNetwork;
 window.signMessage = signMessage;
 window.waitForMetaMask = waitForMetaMask;
+window.createMetaMaskButton = createMetaMaskButton;
 
 // ES6 模块导出
 export default metaMaskExample;
-export { connectMetaMask, checkConnection, switchNetwork, signMessage, waitForMetaMask };
+export { connectMetaMask, checkConnection, switchNetwork, signMessage, waitForMetaMask, createMetaMaskButton };

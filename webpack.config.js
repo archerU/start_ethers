@@ -3,7 +3,41 @@ const { generateEntryConfig } = require("./webpack-selector");
 
 // 获取文件描述
 function getFileDescription(filename) {
-    return filename; // 直接返回文件名，不添加描述
+    const descriptions = {
+        '00_config.js': '配置使用',
+        '01_HelloVitalik.js': '查询余额',
+        '02_Provider.js': 'Provider',
+        '03_ReadContract.js': '读取合约',
+        '04_SendETH.js': '发送ETH',
+        '05_WriteContract.js': '写入合约',
+        '06_DeployContract.js': '部署合约',
+        '07_Event.js': '监听事件',
+        '08_ContractListener.js': '合约监听',
+        '09_EventFilter.js': '事件过滤',
+        '10_Units.js': '单位转换',
+        '11_staticCall.js': '静态调用',
+        '12_ERC721Check.js': 'ERC721',
+        '13_EncodeCalldata.js': '编码数据',
+        '14_HDwallet.js': 'HD钱包',
+        '15_MultiTransfer.js': '批量转账',
+        '16_MultiCollect.js': '批量收集',
+        '17_MerkleTree.js': 'Merkle树',
+        '18_Signature.js': '签名',
+        '19_Mempool.js': '内存池',
+        '20_DecodeTx.js': '解析交易',
+        '21_VanityAddress.js': '靓号地址',
+        '22_ReadAnyData.js': '读取数据',
+        '23_Frontrun.js': '抢先交易',
+        '24_ERC20Check.js': 'ERC20',
+        '25_Flashbots.js': 'Flashbots',
+        '26_EIP712.js': 'EIP712',
+        '27_CreationChecker1.js': '创建检测1',
+        '28_CreationChecker2.js': '创建检测2',
+        'ET_Metamask.js': 'MetaMask',
+        'ET02_SignInWithEthereum.js': 'SIWE'
+    };
+    
+    return descriptions[filename] || filename;
 }
 
 module.exports = {
@@ -38,6 +72,10 @@ module.exports = {
       {
         directory: path.join(__dirname, "docs"),
         publicPath: "/docs",
+      },
+      {
+        directory: path.join(__dirname, "contracts"),
+        publicPath: "/contracts",
       }
     ],
     compress: true,
@@ -56,8 +94,8 @@ module.exports = {
             .sort()
             .map(file => {
               const name = file;
-              const desc = getFileDescription(file);
-              return { name, desc };
+              const description = getFileDescription(file);
+              return { name, description };
             });
           
           res.json(files);
@@ -70,6 +108,10 @@ module.exports = {
     }
   },
   resolve: {
+    alias: {
+      "@contracts": path.resolve(__dirname, "contracts")
+    },
+    extensions: ['.js', '.json'],
     fallback: {
       "crypto": require.resolve("crypto-browserify"),
       "stream": require.resolve("stream-browserify"),
@@ -79,6 +121,17 @@ module.exports = {
       "path": require.resolve("path-browserify"),
       "os": require.resolve("os-browserify/browser")
     }
+  },
+  experiments: {
+    asset: true,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.json$/,
+        type: 'json',
+      }
+    ]
   },
   plugins: [
     new (require("webpack")).ProvidePlugin({
