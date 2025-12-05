@@ -56,10 +56,10 @@ const main = async () => {
         const balanceWETH_deposit = await contractWETH.balanceOf(address)
         console.log(`存款后WETH持仓: ${ethers.formatEther(balanceWETH_deposit)}\n`)
 
-        // 3. 调用transfer()函数，将0.001 WETH转账给 vitalik
+        // 3. 调用transfer()函数，将0.001 WETH转账给 另一个钱包
         console.log("\n3. 调用transfer()函数，给钱包转账0.001 WETH")
         // 发起交易
-        const tx2 = await contractWETH.transfer(WALLETS.dev.address, ethers.parseEther("0.001"))
+        const tx2 = await contractWETH.transfer(WALLETS.main.address, ethers.parseEther("0.001"))
         // 等待交易上链
         await tx2.wait()
         const balanceWETH_transfer = await contractWETH.balanceOf(address)

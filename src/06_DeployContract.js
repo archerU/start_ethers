@@ -1,3 +1,4 @@
+// 部署一个ERC20 代币合约/token  https://ethereum.org/developers/docs/standards/tokens/erc-20/
 // 创建合约工厂实例的规则：
 // const contractFactory = new ethers.ContractFactory(abi, bytecode, signer);
 // 参数分别为合约ABI`abi`，合约字节码`bytecode`，Signer变量`signer`
@@ -7,7 +8,7 @@
 // 其中args为合约构造函数的参数
 
 import { ethers } from "ethers";
-import { NETWORKS, WALLETS, CONTRACTS } from '../privateKeys.js';
+import { NETWORKS, WALLETS } from '../privateKeys.js';
 const SEPOLIA_URL = NETWORKS.sepolia.rpcUrl;
 // 利用公共RPC节点连接以太坊网络
 const provider = new ethers.JsonRpcProvider(SEPOLIA_URL);
@@ -20,7 +21,7 @@ const abiERC20 = [
     "constructor(string memory name_, string memory symbol_)",
     "function name() view returns (string)",
     "function symbol() view returns (string)",
-    "function totalSupply() view returns (uint256)",
+    "function totalSupply() view returns (uint256) ",
     "function balanceOf(address) view returns (uint)",
     "function transfer(address to, uint256 amount) external returns (bool)",
     "function mint(uint amount) external",
@@ -64,10 +65,10 @@ const main = async () => {
 
         // 3. 调用transfer()函数，给自己钱包转账1000代币
         console.log("\n3. 调用transfer()函数，给钱包转账1,000代币")
-        tx = await contractERC20.transfer(WALLETS.dev.address, "1000")
+        tx = await contractERC20.transfer(WALLETS.main.address, "1000")
         console.log("等待交易上链")
         await tx.wait()
-        console.log(`钱包钱包中的代币余额: ${await contractERC20.balanceOf(WALLETS.dev.address)}`)
+        console.log(`钱包钱包中的代币余额: ${await contractERC20.balanceOf(WALLETS.main.address)}`)
 
     }else{
         // 如果ETH不足
